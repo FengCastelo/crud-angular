@@ -1,1 +1,69 @@
-<p>cadastro works!</p>
+<div fxLayout="row" fxLayoutAlign="center" class="container">
+    <div fxLayout="column" fxFlex="1000px">
+        <form class="mt-60" #clientsFrm="ngForm">
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title class="card-title">Personal Data</mat-card-title>
+                </mat-card-header>
+
+                <mat-card-content class="mt-20">
+                    <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="16px">
+                        <div fxLayout="column" fxFlex="500px">
+                            <mat-form-field class="full-width">
+                                <mat-label>Nome: *</mat-label>
+                                <input type="text" placeholder="Insert your name" matInput/>
+                            </mat-form-field>
+                        </div>
+                        
+                    </div>
+
+                    <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="12px">
+                        <div fxLayout="column" fxFlex="350px">
+                            <mat-form-field class="full-width">
+                                <mat-label>CPF: *</mat-label>
+                                <input type="tel" placeholder="_ _ _ . _ _ _ . _ _ _ . _ _" matInput/>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="12px">
+                        <div fxLayout="column" fxFlex="500px">
+                            <mat-form-field class="full-width">
+                                <mat-label>Email: *</mat-label>
+                                <input type="email" placeholder="ex: client@example.com" matInput/>
+
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    
+                    <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="12px">
+                        <div fxLayout="column" fxFlex="350px">
+                            <mat-form-field class="full-width">
+                                <mat-label>Birth Date: *</mat-label>
+                                <input type="date" matInput/>
+
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </mat-card-content>
+
+                <mat-card-actions> 
+                    <button type="submit" mat-button color="accent" class="ml-5">
+                        <mat-icon fontIcon="save"></mat-icon>
+                        Save 
+                    </button>
+                    
+                    <button type="submit" mat-button color="accent" class="ml-5">
+                        <mat-icon fontIcon="refresh"></mat-icon>
+                        Refresh
+                    </button>
+                    
+                    <button type="submit" mat-button color="accent" class="ml-5">
+                        <mat-icon fontIcon="delete"></mat-icon>
+                        Clear
+                    </button>
+                </mat-card-actions>
+            </mat-card>
+        </form>
+    </div>
+</div>
