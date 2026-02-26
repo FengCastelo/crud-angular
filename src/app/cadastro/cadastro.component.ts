@@ -32,5 +32,6 @@ export class CadastroComponent {
 
   save() {
     this.service.save(this.client);
+    alert('User created Successfully!');
   }
 }
