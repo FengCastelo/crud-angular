@@ -5,6 +5,7 @@ import { Client } from './cadastro/client';
   providedIn: 'root',
 })
 export class ClientService {
+
   static REPO_CLIENTS = 'CLIENTS';
 
   constructor() {}
@@ -16,8 +17,14 @@ export class ClientService {
     localStorage.setItem(ClientService.REPO_CLIENTS, JSON.stringify(storage));
   }
 
-  searchClient(name: string): Client[] {
-    return this.getStorage();
+  searchClient(nameSearch: string): Client[] {
+    const clients = this.getStorage();
+
+    if (!nameSearch || nameSearch == null) {
+      return clients;
+    }
+
+    return clients.filter((client) => client.name?.toLowerCase().indexOf(nameSearch.toLowerCase()) !== -1);
   }
 
   private getStorage(): Client[] {

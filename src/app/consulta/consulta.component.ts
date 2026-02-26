@@ -27,6 +27,7 @@ import { Client } from '../cadastro/client';
 })
 export class ConsultaComponent implements OnInit {
 
+  nameSearch: string = '';
   clientsList: Client[] = [];
   tableColumns: string[] = ['id', 'name', 'cpf', 'email', 'birthDate'];
 
@@ -34,5 +35,9 @@ export class ConsultaComponent implements OnInit {
 
   ngOnInit() {
     this.clientsList = this.service.searchClient('');
+  }
+
+  search() {
+    this.clientsList = this.service.searchClient(this.nameSearch);
   }
 }
