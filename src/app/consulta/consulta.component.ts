@@ -52,6 +52,16 @@ export class ConsultaComponent implements OnInit {
   }
 
   prepareEdit(id: string) {
-    this.router.navigate(['/signup'], { queryParams: { "id": id } });
+    this.router.navigate(['/signup'], { queryParams: { id: id } });
+  }
+
+  prepareDelete(client: Client) {
+    client.deleting = true;
+  }
+
+  delete(client: Client) {
+    this.service.delete(client);
+    alert('Client Deleted.')
+    this.clientsList = this.service.searchClient('');
   }
 }

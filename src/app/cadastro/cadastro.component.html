@@ -16,7 +16,7 @@
                   [(ngModel)]="client.name"
                   name="name"
                   placeholder="Insert your name"
-                  matInput
+                  matInput required
                 />
               </mat-form-field>
             </div>
@@ -32,6 +32,7 @@
                   name="cpf"
                   placeholder="_ _ _ . _ _ _ . _ _ _ . _ _"
                   matInput
+                  required
                 />
               </mat-form-field>
             </div>
@@ -47,6 +48,7 @@
                   name="email"
                   placeholder="ex: client@example.com"
                   matInput
+                  required
                 />
               </mat-form-field>
             </div>
@@ -61,6 +63,7 @@
                   [(ngModel)]="client.birthDate"
                   name="birthDate"
                   matInput
+                  required
                 />
               </mat-form-field>
             </div>
