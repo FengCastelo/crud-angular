@@ -27,15 +27,20 @@ import { Router } from '@angular/router';
   styleUrl: './consulta.component.scss',
 })
 export class ConsultaComponent implements OnInit {
-
   nameSearch: string = '';
   clientsList: Client[] = [];
-  tableColumns: string[] = ["id", "name", "cpf", "email", "birthDate", "actions"];
+  tableColumns: string[] = [
+    'id',
+    'name',
+    'cpf',
+    'email',
+    'birthDate',
+    'actions',
+  ];
 
   constructor(
     private service: ClientService,
-    private route: Router
-
+    private router: Router,
   ) {}
 
   ngOnInit() {
@@ -47,6 +52,6 @@ export class ConsultaComponent implements OnInit {
   }
 
   prepareEdit(id: string) {
-    this.route.navigate(['/signup'], { queryParams: { "client": id} });
+    this.router.navigate(['/signup'], { queryParams: { "id": id } });
   }
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Client } from './client';
 import { ClientService } from '../client.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-cadastro',
@@ -23,15 +24,40 @@ import { ClientService } from '../client.service';
   templateUrl: './cadastro.component.html',
   styleUrl: './cadastro.component.scss',
 })
-export class CadastroComponent {
-  client: Client = Client.newClient();
+export class CadastroComponent implements OnInit{
 
-  constructor(private service: ClientService) {
+  client: Client = Client.newClient();
+  updating: boolean = false;
+
+  constructor(
+    private service: ClientService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
 
   }
+
+  ngOnInit(): void {
+    this.route.queryParamMap.subscribe( (query: any) => {
+        const params = query['params'];
+        const id = params['id'];
+        if(id) {
+          let clientFound = this.service.findClientById(id);
+          if(clientFound) {
+            this.updating = true;
+            this.client = clientFound;
+          } else {
+            this.client = Client.newClient();
+          }
+        }
+    } );
+  }
+
+  
 
   save() {
     this.service.save(this.client);
     alert('User created Successfully!');
+    this.client = Client.newClient();
   }
 }
