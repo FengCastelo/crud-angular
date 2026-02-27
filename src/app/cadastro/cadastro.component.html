@@ -10,7 +10,7 @@
           <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="16px">
             <div fxLayout="column" fxFlex="500px">
               <mat-form-field class="full-width">
-                <mat-label>Nome: *</mat-label>
+                <mat-label>Nome: </mat-label>
                 <input
                   type="text"
                   [(ngModel)]="client.name"
@@ -25,11 +25,12 @@
           <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="12px">
             <div fxLayout="column" fxFlex="350px">
               <mat-form-field class="full-width">
-                <mat-label>CPF: *</mat-label>
+                <mat-label>CPF: </mat-label>
                 <input
                   type="text"
                   [(ngModel)]="client.cpf"
                   name="cpf"
+                  mask="000.000.000-00"
                   placeholder="_ _ _ . _ _ _ . _ _ _ . _ _"
                   matInput
                   required
@@ -41,7 +42,7 @@
           <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="12px">
             <div fxLayout="column" fxFlex="500px">
               <mat-form-field class="full-width">
-                <mat-label>Email: *</mat-label>
+                <mat-label>Email: </mat-label>
                 <input
                   type="text"
                   [(ngModel)]="client.email"
@@ -57,11 +58,12 @@
           <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="12px">
             <div fxLayout="column" fxFlex="350px">
               <mat-form-field class="full-width">
-                <mat-label>Birth Date: *</mat-label>
+                <mat-label>Birth Date: </mat-label>
                 <input
-                  type="date"
+                  type="text"
                   [(ngModel)]="client.birthDate"
                   name="birthDate"
+                  mask="00/00/0000"
                   matInput
                   required
                 />
