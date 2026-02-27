@@ -24,40 +24,41 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: './cadastro.component.html',
   styleUrl: './cadastro.component.scss',
 })
-export class CadastroComponent implements OnInit{
-
+export class CadastroComponent implements OnInit {
   client: Client = Client.newClient();
   updating: boolean = false;
 
   constructor(
     private service: ClientService,
     private route: ActivatedRoute,
-    private router: Router
-  ) {
-
-  }
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {
-    this.route.queryParamMap.subscribe( (query: any) => {
-        const params = query['params'];
-        const id = params['id'];
-        if(id) {
-          let clientFound = this.service.findClientById(id);
-          if(clientFound) {
-            this.updating = true;
-            this.client = clientFound;
-          } else {
-            this.client = Client.newClient();
-          }
+    this.route.queryParamMap.subscribe((query: any) => {
+      const params = query['params'];
+      const id = params['id'];
+      if (id) {
+        let clientFound = this.service.findClientById(id);
+        if (clientFound) {
+          this.updating = true;
+          this.client = clientFound;
+        } else {
+          this.client = Client.newClient();
         }
-    } );
+      }
+    });
   }
 
-  
-
   save() {
-    this.service.save(this.client);
-    alert('User created Successfully!');
-    this.client = Client.newClient();
+    if (!this.updating) {
+      this.service.save(this.client);
+      alert('User created Successfully!');
+      this.client = Client.newClient();
+    } else {
+      this.service.update(this.client);
+      alert('User Updated Successfully!');
+      this.router.navigate(['/query']);
+    }
   }
 }

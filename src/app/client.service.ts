@@ -5,7 +5,6 @@ import { Client } from './cadastro/client';
   providedIn: 'root',
 })
 export class ClientService {
-
   static REPO_CLIENTS = 'CLIENTS';
 
   constructor() {}
@@ -17,6 +16,19 @@ export class ClientService {
     localStorage.setItem(ClientService.REPO_CLIENTS, JSON.stringify(storage));
   }
 
+  update(client: Client) {
+    const storage = this.getStorage();
+    storage.map((c) => {
+      if (c.id === client.id) {
+        c.name = client.name;
+        c.email = client.email;
+        c.birthDate = client.birthDate;
+        c.cpf = client.cpf;
+      }
+    });
+    localStorage.setItem(ClientService.REPO_CLIENTS, JSON.stringify(storage));
+  }
+
   searchClient(nameSearch: string): Client[] {
     const clients = this.getStorage();
 
@@ -24,13 +36,16 @@ export class ClientService {
       return clients;
     }
 
-    return clients.filter((client) => client.name?.toLowerCase().indexOf(nameSearch.toLowerCase()) !== -1);
+    return clients.filter(
+      (client) =>
+        client.name?.toLowerCase().indexOf(nameSearch.toLowerCase()) !== -1,
+    );
   }
 
-  findClientById(id: string) : Client | undefined{
+  findClientById(id: string): Client | undefined {
     const clients = this.getStorage();
 
-    return clients.find(client => client.id === id);
+    return clients.find((client) => client.id === id);
   }
 
   private getStorage(): Client[] {

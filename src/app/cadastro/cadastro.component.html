@@ -68,15 +68,17 @@
         </mat-card-content>
 
         <mat-card-actions>
-          <button type="submit" mat-button color="accent" class="ml-5">
-            <mat-icon fontIcon="save"></mat-icon>
-            Save
-          </button>
-
-          <button type="button" mat-button color="accent" class="ml-5">
-            <mat-icon fontIcon="refresh"></mat-icon>
-            Update
-          </button>
+          @if (!updating) {
+            <button type="submit" mat-button color="accent" class="ml-5">
+              <mat-icon fontIcon="save"></mat-icon>
+              Save
+            </button>
+          } @else {
+            <button type="submit" mat-button color="accent" class="ml-5">
+              <mat-icon fontIcon="refresh"></mat-icon>
+              Update
+            </button>
+          }
 
           <button type="button" mat-button color="accent" class="ml-5">
             <mat-icon fontIcon="delete"></mat-icon>
