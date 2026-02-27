@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatIconModule } from '@angular/material/icon';
-import { FormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { FormsModule } from '@angular/forms';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { ClientService } from '../client.service';
 import { Client } from '../cadastro/client';
 import { Router } from '@angular/router';
@@ -29,6 +30,7 @@ import { Router } from '@angular/router';
 export class ConsultaComponent implements OnInit {
   nameSearch: string = '';
   clientsList: Client[] = [];
+  private _snack: MatSnackBar = inject(MatSnackBar);
   tableColumns: string[] = [
     'id',
     'name',
@@ -61,7 +63,11 @@ export class ConsultaComponent implements OnInit {
 
   delete(client: Client) {
     this.service.delete(client);
-    alert('Client Deleted.')
+    this.openMessage('Client Deleted!');
     this.clientsList = this.service.searchClient('');
+  }
+
+  openMessage(message: string) {
+    this._snack.open(message, "OK");
   }
 }

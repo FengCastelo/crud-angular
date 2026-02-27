@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { MatCardModule } from '@angular/material/card';
-import { MatInputModule } from '@angular/material/input';
-import { FormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit, inject } from '@angular/core';
 import { Client } from './client';
 import { ClientService } from '../client.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 
 @Component({
@@ -21,16 +22,17 @@ import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
     MatInputModule,
     MatButtonModule,
     MatIconModule,
-    NgxMaskDirective
-  ], providers: [
-    provideNgxMask()
+    NgxMaskDirective,
   ],
+  providers: [provideNgxMask()],
   templateUrl: './cadastro.component.html',
   styleUrl: './cadastro.component.scss',
 })
 export class CadastroComponent implements OnInit {
+
   client: Client = Client.newClient();
   updating: boolean = false;
+  private _snack: MatSnackBar = inject(MatSnackBar);
 
   constructor(
     private service: ClientService,
@@ -57,12 +59,17 @@ export class CadastroComponent implements OnInit {
   save() {
     if (!this.updating) {
       this.service.save(this.client);
-      alert('User created Successfully!');
+      this.openSnackBar('Created Successfully!');
       this.client = Client.newClient();
+      this.router.navigate(['/query']);
     } else {
       this.service.update(this.client);
-      alert('User Updated Successfully!');
+      this.openSnackBar('Updated Successfully!');
       this.router.navigate(['/query']);
     }
+  }
+
+  openSnackBar(message: string) {
+    this._snack.open(message, "OK");
   }
 }
