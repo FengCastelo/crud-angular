@@ -1,9 +1,9 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { Client } from './client';
 import { ClientService } from '../client.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { HttpService } from '../http.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -11,10 +11,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatSelectModule } from '@angular/material/select';
+import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { Municipality, UF } from '../brasilapi.models';
-import { CommonModule } from "@angular/common";
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-cadastro',
@@ -29,13 +29,12 @@ import { CommonModule } from "@angular/common";
     MatIconModule,
     MatSelectModule,
     NgxMaskDirective,
-],
+  ],
   providers: [provideNgxMask()],
   templateUrl: './cadastro.component.html',
   styleUrl: './cadastro.component.scss',
 })
 export class CadastroComponent implements OnInit {
-
   client: Client = Client.newClient();
   updating: boolean = false;
   private _snack: MatSnackBar = inject(MatSnackBar);
@@ -61,6 +60,10 @@ export class CadastroComponent implements OnInit {
         } else {
           this.client = Client.newClient();
         }
+        if (this.client.uf) {
+          const event = { value: this.client.uf }
+          this.loadMunicipality(event as MatSelectChange);
+        }
       }
 
       this.loadUFs();
@@ -70,8 +73,16 @@ export class CadastroComponent implements OnInit {
   loadUFs() {
     // Observable / Subscribe
     this.brasilApiService.listUFs().subscribe({
-      next: statesList => this.states = statesList,
-      error: erro => console.log("Error: ", erro)
+      next: (statesList) => (this.states = statesList),
+      error: (erro) => console.log('Error: ', erro),
+    });
+  }
+
+  loadMunicipality(event: MatSelectChange) {
+    const ufSelected = event.value;
+    this.brasilApiService.listMunicipality(ufSelected).subscribe({
+      next: (listMunicipality) => (this.municipality = listMunicipality),
+      error: (erro) => console.log('Error: ' + erro),
     });
   }
 
@@ -86,6 +97,12 @@ export class CadastroComponent implements OnInit {
       this.openSnackBar('Updated Successfully!');
       this.router.navigate(['/query']);
     }
+  }
+
+  @ViewChild('formRef') form!: NgForm;
+
+  clear() {
+    this.client = Client.newClient();
   }
 
   openSnackBar(message: string) {

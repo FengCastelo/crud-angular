@@ -16,7 +16,8 @@
                   [(ngModel)]="client.name"
                   name="name"
                   placeholder="Insert your name"
-                  matInput required
+                  matInput
+                  required
                 />
               </mat-form-field>
             </div>
@@ -75,11 +76,24 @@
             <div fxLayout="column" fxFlex="200px">
               <mat-form-field class="full-width">
                 <mat-label>UF: </mat-label>
-                  <mat-select>
-                        <mat-option *ngFor="let uf of states" [value]="uf.sigla">
-                           {{ uf.nome }} - {{ uf.sigla }}
-                        </mat-option>
-                  </mat-select>
+                <mat-select [value]="client.uf" (selectionChange)="loadMunicipality($event)">
+                  <mat-option *ngFor="let uf of states" [value]="uf.sigla">
+                    {{ uf.nome }} - {{ uf.sigla }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="12px">
+            <div fxLayout="column" fxFlex="200px">
+              <mat-form-field class="full-width">
+                <mat-label>Município: </mat-label>
+                <mat-select>
+                  <mat-option [value]="client.municipality" *ngFor="let m of municipality" [value]="m.nome">
+                    {{ m.nome }}
+                  </mat-option>
+                </mat-select>
               </mat-form-field>
             </div>
           </div>
@@ -98,7 +112,7 @@
             </button>
           }
 
-          <button type="button" mat-button color="accent" class="ml-5">
+          <button (click)="clear()" type="button" mat-button color="accent" class="ml-5">
             <mat-icon fontIcon="delete"></mat-icon>
             Clear
           </button>
