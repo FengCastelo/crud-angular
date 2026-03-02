@@ -22,7 +22,7 @@ import { Router } from '@angular/router';
     FlexLayoutModule,
     FormsModule,
     MatButtonModule,
-    CommonModule,
+    CommonModule
   ],
   templateUrl: './consulta.component.html',
   styleUrl: './consulta.component.scss',

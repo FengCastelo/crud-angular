@@ -20,10 +20,7 @@ export class ClientService {
     const storage = this.getStorage();
     storage.map((c) => {
       if (c.id === client.id) {
-        c.name = client.name;
-        c.email = client.email;
-        c.birthDate = client.birthDate;
-        c.cpf = client.cpf;
+        Object.assign(c, client);
       }
     });
     localStorage.setItem(ClientService.REPO_CLIENTS, JSON.stringify(storage));
